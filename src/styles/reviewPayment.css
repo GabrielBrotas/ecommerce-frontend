@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+/* Main */
+.main{
+    width: 100%;
+    max-width: 1500px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.main-h3{
+    color: #ccc;
+    margin-left: 2rem;
+    width: 100%;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.reviewpayment-content{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0rem 2rem;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.addressreview-content{
+    margin: 2rem;
+    color: #ccc;    
+}
+
+.addressreview-content h4, .review-content-text{
+    
+    margin-left: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.address-cep-estado-cidade, .address-bairro-avenida-numero{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.address-info-content{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+.address-info-content input{
+    width: 100%;
+    padding: 2px 15px;
+    background-color: #383838;
+    color: #ccc;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.list-body-review{
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid gray;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.review-content{
+    margin-top: 5rem;
+    background-color: #202020;
+    color: #ccc;
+    flex: 1 1;
+    text-align: center;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.review-content h3{
+    margin: 0 2rem;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.review-qty, .review-amount{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2rem;
+
+}
+
+.paypal-button{
+    margin: 1rem;
+}

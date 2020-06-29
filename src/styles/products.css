@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+/* Main */
+.main{
+    width: 100%;
+    max-width: 1500px;
+}
+a{
+    cursor: default;
+}
+
+
+/* filter */
+
+.product-categories{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #121212;
+    margin-bottom: 3rem;
+    height: 7rem;
+    font-family: 'Open Sans', sans-serif;
+    
+}
+
+.product-categories a {
+    width: 100%;
+    display: flex;
+}
+
+.category{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    width: 100%;
+    color: #ccc;
+    border-bottom-color: #0078f2;
+    transition: .2s ease-in-out;
+}
+
+.category:hover{
+    background-color: #202020;
+    color:#fff;
+    cursor: pointer;
+    border-bottom: 4px solid #0078f2;
+    
+}
+/* mais vendidos box */
+
+.all-products{
+    bottom: 5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+}
+
+.all-products h2 {
+    color: #f7f6f6
+}
+
+.box-products{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+
+.product-content {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 2.5rem;
+    cursor: pointer;
+    transition: all .4s ease-in-out;
+}
+
+.product-img img{
+    height: 220px;
+    width: 275px;
+    transition: .3s ease-in-out;
+}
+
+.product-img img:hover{
+    transform: scale(1.1);
+}
+
+.product-name, .product-price {
+    margin-bottom: 1rem;
+}
+
+.triangle-buttons{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}
+
+.triangle-next{
+    width: 0; 
+    height: 0; 
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 25px solid white;
+    margin-left: 2rem;
+    cursor: pointer;
+}
+
+.triangle-prev{
+    width: 0; 
+    height: 0; 
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent; 
+    border-right:25px solid white; 
+    margin-right: 2rem;
+    cursor: pointer;
+}

@@ -1,0 +1,57 @@
+.address-content{
+    width: 70%;
+    max-width: 500px;
+    margin: 5rem auto 5rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: #202020;
+    color: #ccc;    
+}
+
+.address-content h3{
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
+
+.estado-cidade{
+    display: flex;
+}
+
+.address-estado{
+    flex: 1;
+}
+
+.address-cidade{
+    flex:3
+}
+
+.bairro-avenida-numero{
+    display: flex;
+}
+
+.address-bairro{
+    flex: 2;
+}
+
+.address-avenida{
+    flex: 3;
+}
+
+.address-numero{
+    flex: 1;
+}
+/* remover arrows do input numero da casa */
+.address-numero input::-webkit-outer-spin-button, .address-numero input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;  
+}
+
+.address-li-button button{
+    width: 100%;
+}
+
+

@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+.main{
+    margin: 10rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    
+}
+.admin-content{
+    margin-top: 10rem;
+    width: 100%;
+}
+.admin-main{
+    margin-top: 2rem;
+    width: 100%;
+    text-align: -webkit-center;
+}
+
+/* admin navbar  */
+.admin-navbar{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #121212;
+    height: 4rem;
+    font-family: 'Open Sans', sans-serif;
+    list-style: none;
+    padding: 0;
+}
+.admin-navbar a{
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+}
+.admin-navbar li{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    color: #ccc;
+    border-bottom-color: #0078f2;
+    transition: .2s ease-in-out;
+    border-bottom: 0px;
+}
+
+.admin-navbar li:hover, #navbar-sales:hover, #navbar-product:hover{
+    color: #fff;
+    border-bottom: 4px;
+    border-bottom: 4px solid #0078f2;
+}
+/*  */
+
+.compras-info-content{
+    margin-left: 5rem;
+    margin-right: 5rem;
+    color: #ccc;
+    border-bottom: 1px solid #ccc;
+}
+.compras-info-content h2{
+    margin-left: 0;
+}
+
+/* add new item button   */
+.newItemDiv{
+    margin-left: 5rem;
+    margin-bottom: 2rem;
+}
+
+.newItemDiv button{
+    background-color: #0078f2;
+    color: #f7f6f6;
+    font-weight: 550;
+}
+
+.newItemDiv button:hover{
+    background-color: #0160c2;
+    color: #fff;
+}
+
+/*  */
+
+
+/* admin table */
+.admin-table{
+    border-collapse: collapse;
+    margin: 5rem;
+}
+
+@media screen and (max-width: 550px){
+    .admin-table{
+        margin: 0;
+        font-size: xx-small;
+    }
+    .compras-info-content{
+        margin: 0;
+        margin-bottom: 5rem;
+        width: 100%;
+        text-align: center;
+    }
+}
+.admin-table th{
+    text-align-last: center;
+    
+}
+.admin-table tr {
+    text-align: center;
+}
+.tr-description{
+    text-align: -webkit-left;
+}
+.admin-table td, .admin-table th {
+    border: .1px solid rgb(160, 149, 149);
+    padding: 8px;
+}
+  
+.admin-table tr:nth-child(even){background-color: #f2f2f2;}
+.admin-table tr:nth-child(odd){background-color: #fbfef9;}
+.admin-table tr:hover {background-color: #ddd;}
+
+.admin-table th {
+padding-top: 12px;
+padding-bottom: 12px;
+text-align: center;
+background-color: #0078f2;
+font-weight: normal;
+color: #fff;
+font-weight: 600;
+}
+
+.admin-table-actions{
+    display: flex;
+    flex-wrap: wrap;
+}
+.admin-table-actions button{
+    margin: 1rem;
+    flex: 1;
+}
+.delete-button {
+	box-shadow:inset 0px 1px 0px 0px #cf866c;
+	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+	background-color:#d0451b;
+	border-radius:3px;
+	border:1px solid #942911;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #854629;
+}
+
+.delete-button:hover {
+	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+	background-color:#bc3315;
+}
+
+.edit-button {
+	box-shadow:inset 0px 1px 0px 0px #cf866c;
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	background-color:#ffec64;
+	border-radius:3px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+}
+
+.edit-button:hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	background-color:#ffab23;
+}
+
+/* section add new item */
+.itemConfig-content{
+    margin: 5rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: #202020;
+    color: #ccc;  
+    font-family: 'Open Sans', sans-serif;
+}
+
+.itemConfig-content h3{
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2rem;
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
+
+.itemConfig-form{
+    background-color: #202020;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+    width: 50%;
+    list-style-type: none;
+}
+
+.itemConfig-form li {
+    display: flex;
+    flex-direction: column;
+}
+
+.itemConfig-form label{
+    margin: .5rem;
+}
+
+.itemConfig-form input, .itemConfig-form textarea, .itemConfig-form select{
+    width: 100%;
+    padding: 8px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.new-item-button{
+    margin: 2rem 0;
+}
+
+
+.admin-button {
+    box-shadow: 0px 1px 0px 0px #f0f7fa;
+    background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+    background-color:#33bdef;
+    border-radius:6px;
+    border:1px solid #057fd0;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px -1px 0px #5b6178;
+}
+
+.admin-button:hover {
+    background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+    background-color:#019ad2;
+}
+
+.admin-button-cancel {
+    box-shadow: 0px 1px 0px 0px #f0f7fa;
+    background:linear-gradient(to bottom, #ef333d 5%, #d20123 100%);
+    background-color:#33bdef;
+    border-radius:6px;
+    border:1px solid #5b6178;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px -1px 0px #5b6178;
+}
+
+.admin-button-cancel:hover {
+    background:linear-gradient(to bottom, #b82128 5%, #ef333d 100%);
+    background-color:#019ad2;
+}
+

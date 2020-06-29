@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+/* Main */
+.main{
+    width: 100%;
+    max-width: 1500px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* main carousel */
+.carousel-container{
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.slide-container {
+    display: flex;
+    transition: 0.5s ease-in-out;
+    display: -webkit-box;
+}
+
+.carousel-slide{
+    opacity: .8;
+    /* width: max-content; */
+}
+
+.image-content{
+    display: flex;
+}
+
+.image-content img{
+    width: 100%;
+}
+
+.arrows-div{
+    align-self: center;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    max-width: 1500px;
+    justify-content: space-between;
+}
+
+.seta-right{
+    margin-left: auto;
+    padding: 12px;
+    background-color: #fbfef9;
+    opacity: .8;
+    margin-right: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.seta-right:hover, .seta-left:hover{
+    opacity: 1;
+}
+
+.seta-left{
+    margin-right: auto;
+    padding: 12px;
+    background-color: #fbfef9;
+    opacity: .8;
+    margin-left: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.box-buy {
+    position: relative;
+    background-color: #2a2a2a;
+    width: 15%;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 150px;
+    cursor: pointer;
+    transition: .2s ease-out;
+    bottom: 10rem;
+}
+.box-buy a{
+    height: 5rem;
+    font-weight: 600;
+    color: #d6d6d6;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-buy a:hover {
+    color: #fff;
+    background-color: #121212;
+}
+
+
+@media screen and (max-width: 575px) {
+    .box-buy {
+        bottom: 7rem;
+    }
+}
+
+.box-buy p {
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+}
+
+
+/* Main produtos destaque  */
+.products-content{
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    contain: content;
+}
+
+.products-content a{
+    flex: 1;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.products-highligth {
+    width: 60%;
+}
+.products-highligth p, h2{
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.product-one-background, .product-two-background{
+    width: 40%;
+}
+
+.product-one, .product-two {
+    display: flex;
+    height: 100%;
+    flex:1;
+    align-items: flex-start;
+    background-color: #2A2A2A;
+    color: #d6d6d6;
+    max-width: 1500px;
+    margin: 25px;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+    flex-wrap: wrap;
+    contain: content;
+}
+
+.product-one:hover, .product-two:hover {
+    transition: .4s ease-in-out;
+    transform: scale(1.1);
+}
+
+
+/* mais vendidos box */
+
+.bests-sellers-content{
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 8rem 2.3rem 8rem;
+    background-color: #2A2A2A;
+    color: #d6d6d6;
+}
+
+.bests-sellers-content h2 {
+    color: #d6d6d6;
+    margin: 4rem 0 3rem;
+    font-size: xx-large;
+}
+
+.box-best-products{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.product-bestseller-content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2.5rem;
+}
+
+.product-bestseller-img img{
+    height: 367px;
+    width: 275px;
+    cursor: pointer;
+}
+
+.product-bestseller-img{
+    transition: .4s ease-in-out;
+}
+.product-bestseller-img:hover {
+    
+    transform: scale(1.1);
+}
+
+
+.product-name{
+    text-align: center;
+}
+
+.button {
+    background-color: #2a2a2a;
+    font-weight: bold;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: .5rem 0 3.5rem;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-color: rgba(255, 255, 255, 0.2);
+    border-style: solid;
+    border-width: 0.06rem;
+}
+.button:hover{
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.45);
+    background-color: #121212;
+    
+}
