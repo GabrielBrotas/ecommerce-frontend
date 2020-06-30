@@ -7,7 +7,7 @@ import {uniqueId} from 'lodash'
 import filesize from 'filesize'
 
 // actions
-import { listProducts, saveProduct, deleteProduct} from '../actions/productActions'
+import { listProducts, saveProduct, deleteProduct, uploadImage} from '../actions/productActions'
 
 // components
 import Upload from '../components/Upload'
@@ -22,15 +22,18 @@ function Admin(props) {
     const productList = useSelector(state=> state.productList)
     const {loading, products, error, next, previous} = productList
 
+    const imageUpload = useSelector(state=> state.imageUpload)
+    const {progress, uploaded, image, errorUpload} = imageUpload
+
     const [id, setId] = useState('')
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
-    const [image, setImage] = useState('')
     const [category, setCategory] = useState('Game')
     const [countInStock, setCountInStock] = useState(0)
     const [description, setDescription] = useState('')
     const [bestseller, setBestseller] = useState(false)
     const [carousel, setCarousel] = useState(false)
+
 
     const [uploadedFile, setUploadedFile] = useState({})
     const [showForm, setshowForm] = useState(false)
@@ -48,32 +51,26 @@ function Admin(props) {
     // open new item or edit item form
     const openForm = (product) => {
         setshowForm(!showForm)
-
         if(product._id) {
             setId(product._id)
             setName(product.name)
             setPrice(product.price)
-            setImage(product.image)
             setCategory(product.category)
             setCountInStock(product.countInStock)
             setDescription(product.description)
             setBestseller(product.bestseller)
             setCarousel(product.carousel)
         }
-        
     }
 
     // save product
     const submitHandler = (e) => {
-        // e.preventDefault();
-        // todo, form chegando vazio ao backend
         dispatch(saveProduct({
             _id: id,
-            name, price, image, category, countInStock, description, bestseller, carousel
+            name, price, category, countInStock, description, bestseller, carousel
         }))
-
         setshowForm(!showForm)
-
+        // window.location.reload()
     }
 
     // delete product
@@ -97,17 +94,20 @@ function Admin(props) {
             error: false,
             url: null, // url que vai redirecionar para a imagem, inicia como null pois só vai ser preenchida depois de preenchido o upload
         }
-        
         setUploadedFile(newUploadedFile)
-
-        processUpload(newUploadedFile)
+        dispatch(uploadImage(newUploadedFile))
     }
 
-    const processUpload = (uploadFile) => {
-        const data = new FormData()
-        data.append('file', uploadFile.file, uploadFile.name)
-        setImage(data)
-    }
+    useEffect( () => {
+        setUploadedFile({...uploadedFile, progress})
+        if(uploaded){
+            setUploadedFile({...uploadedFile, id: image.key, url: image.url, uploaded})
+        }
+        if(errorUpload){
+            setUploadedFile({...uploadedFile, error: true})
+        }
+        
+    }, [progress, uploaded])
 
 
     return(
@@ -188,7 +188,7 @@ function Admin(props) {
                         </li>
 
                         <li className="new-item-button">
-                            <button className="admin-button">{id ? 'Editar' : 'Adicionar'}</button>
+                            <button type="button" className="admin-button" onClick={submitHandler}>{id ? 'Editar' : 'Adicionar'}</button>
                         </li>
                         <li className="new-item-button">
                             <button className="admin-button-cancel" onClick={() => openForm({})}>Cancelar</button>

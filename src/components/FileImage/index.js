@@ -33,7 +33,7 @@ const FileList = ({ file, onDelete }) => {
                         path: {stroke: "#0078f2"},
                     }}
                     strokeWidth={10}
-                    value={25}
+                    value={file.progress}
                 />
                 )}
 

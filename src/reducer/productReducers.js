@@ -1,6 +1,6 @@
 // reducer trata os states e actions
 
-import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_ITEM_REQUEST, PRODUCT_ITEM_SUCCESS, PRODUCT_ITEM_FAIL, PAYMENT_LIST_REQUEST, PAYMENT_LIST_SUCCESS, PAYMENT_LIST_FAIL } from "../constants/productConstants";
+import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_ITEM_REQUEST, PRODUCT_ITEM_SUCCESS, PRODUCT_ITEM_FAIL, PAYMENT_LIST_REQUEST, PAYMENT_LIST_SUCCESS, PAYMENT_LIST_FAIL, IMAGE_SAVE_FAIL, IMAGE_SAVE_SUCCESS, IMAGE_SAVE_REQUEST } from "../constants/productConstants";
 
 // definir o estado inicial do state
 function productListReducer(state = {products: []}, action) {
@@ -16,6 +16,22 @@ function productListReducer(state = {products: []}, action) {
             return state
     }
 }
+
+
+function imageUploadReducer(state = {progress: 0, uploaded: false}, action) {
+
+    switch (action.type) {
+        case IMAGE_SAVE_REQUEST:
+            return {uploaded: false, progress: action.payload}
+        case IMAGE_SAVE_SUCCESS:
+            return {uploaded: true, progress:100, image: action.payload}
+        case IMAGE_SAVE_FAIL:
+            return {uploaded: false, progress:100, errorUpload: action.payload}
+        default:
+            return state
+    }
+}
+
 
 function paymentListReducer(state = {payments: []}, action) {
     switch (action.type) {
@@ -61,4 +77,4 @@ function productDeleteReducer(state = {products: {}}, action) {
     }
 }
 
-export {productListReducer, productItemReducer ,productDeleteReducer, paymentListReducer}
+export {productListReducer, imageUploadReducer, productItemReducer ,productDeleteReducer, paymentListReducer}

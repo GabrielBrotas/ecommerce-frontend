@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_ITEM_REQUEST, PRODUCT_ITEM_SUCCESS, PRODUCT_ITEM_FAIL, PRODUCT_SAVE_REQUEST, PRODUCT_SAVE_SUCCESS, PRODUCT_SAVE_FAIL, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PAYMENT_LIST_REQUEST, PAYMENT_LIST_SUCCESS, PAYMENT_LIST_FAIL} from '../constants/productConstants'
+import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_ITEM_REQUEST, PRODUCT_ITEM_SUCCESS, PRODUCT_ITEM_FAIL, PRODUCT_SAVE_REQUEST, PRODUCT_SAVE_SUCCESS, PRODUCT_SAVE_FAIL, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PAYMENT_LIST_REQUEST, PAYMENT_LIST_SUCCESS, PAYMENT_LIST_FAIL, IMAGE_SAVE_FAIL, IMAGE_SAVE_SUCCESS, IMAGE_SAVE_REQUEST} from '../constants/productConstants'
 
 
 const listProducts = (filterCondition, page, limit) => async (dispatch) => {
@@ -20,6 +20,7 @@ const listProducts = (filterCondition, page, limit) => async (dispatch) => {
 
 }
 
+
 const productById = (id) => async (dispatch) => {
 
     try{
@@ -39,22 +40,39 @@ const saveProduct = (product) => async (dispatch) => {
         dispatch({type: PRODUCT_SAVE_REQUEST, payload: product})
 
         if(!product._id){
-            
             const {data} = await Axios.post('http://localhost:8081/products', product)
-            
             dispatch({type: PRODUCT_SAVE_SUCCESS, payload: data})
-            
         } else {
             const {data} = await Axios.put('http://localhost:8081/products/' + product._id, product)
-
             dispatch({type: PRODUCT_SAVE_SUCCESS, payload: data})
         }
-
         
     } catch(error) {
         dispatch({type: PRODUCT_SAVE_FAIL, payload: error.message})
     }
 }
+
+
+const uploadImage = (uploadedFile) => (dispatch) => {
+    const imageForm = new FormData()
+
+    imageForm.append('file', uploadedFile.file, uploadedFile.name)
+
+    Axios.post('http://localhost:8081/products/upload', imageForm, {
+
+        onUploadProgress: e=> {
+            const progress = parseInt(Math.round( (e.loaded * 100) / e.total ))
+            dispatch({type: IMAGE_SAVE_REQUEST, payload: progress})
+        }
+
+    }).then( response => {
+        const {data} = response
+        dispatch({type: IMAGE_SAVE_SUCCESS, payload: data})
+    }).catch( err => {
+        dispatch({type: IMAGE_SAVE_FAIL, payload: err.message})
+    })
+}
+
 
 const deleteProduct = (productId) => async (dispatch) => {
 
@@ -66,6 +84,7 @@ const deleteProduct = (productId) => async (dispatch) => {
         dispatch({type: PRODUCT_DELETE_FAIL, payload: error.message})
     }
 }
+
 
 const listPayments = (userId) => async (dispatch) => {
     try{
@@ -84,6 +103,7 @@ const listPayments = (userId) => async (dispatch) => {
     }
 }
 
+
 const changeDelivered = (id) => async (dispatch) => {
 
     await Axios.put('http://localhost:8081/payments/' + id)
@@ -93,4 +113,4 @@ const changeDelivered = (id) => async (dispatch) => {
     
 }
 
-export {listProducts, productById, saveProduct, deleteProduct, listPayments, changeDelivered}
+export {listProducts, productById, saveProduct, uploadImage, deleteProduct, listPayments, changeDelivered}
