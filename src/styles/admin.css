@@ -103,8 +103,20 @@
 .admin-table tr {
     text-align: center;
 }
+
 .tr-description{
+    overflow: hidden;
+    vertical-align: top;
+    position: relative;
     text-align: -webkit-left;
+}
+
+.tr-description p {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    position: absolute;
 }
 .admin-table td, .admin-table th {
     border: .1px solid rgb(160, 149, 149);

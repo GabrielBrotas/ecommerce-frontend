@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 
 import '../styles/index.css'
 import { listProducts } from '../actions/productActions'
+import { listImages } from '../actions/imageActions'
 
 
 function HomePage() {
@@ -14,12 +15,14 @@ function HomePage() {
     const productList = useSelector(state => state.productList)
     const {products, loading, error} = productList
 
+    const imageList = useSelector( state => state.imageList)
+    const {loadingImages, images} = imageList
+
     const dispatch = useDispatch();
 
     useEffect( () => {
-
         dispatch(listProducts(null))
-
+        dispatch(listImages())
     }, [dispatch])
     
 
@@ -77,12 +80,8 @@ function HomePage() {
     }
     
 
-    // const buyCarouselImage = (counter) => {
-    //     console.log(counter)
-    // }
-
     return( 
-        loading ? <div>Loading...</div>
+        loading || loadingImages ? <div>Loading...</div>
         :
         error ? <div>{error}</div>
         :
@@ -97,7 +96,10 @@ function HomePage() {
                         <div key={product._id} className="carousel-slide"> 
 
                             <div className="image-content">
-                                <img className="image-carousel" src={product.image} alt='Carousel Foto'></img>
+                                {images.map( image => (
+                                        image.key === product.key && 
+                                        <img className="image-carousel" key={image.key} src={image.url} alt='Carousel Foto'></img>
+                                    ))}
                             </div>
                             
                             <div className="box-buy">
@@ -165,7 +167,12 @@ function HomePage() {
                             <div className="product-bestseller-img">
 
                             <Link to={"/product/" + product._id} style={{ textDecoration: 'none', color: '#161616' }}>
-                                <img src={product.image} alt="Product" ></img>
+
+                                {images.map( image => (
+                                    image.key === product.key && 
+                                    <img key={image.key} src={image.url} alt="Product"></img>
+                                ))}
+
                             </Link>
                                 
                             </div>

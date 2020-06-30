@@ -8,11 +8,12 @@ const addToCart = (productId, qty) => async(dispatch, getState) => {
 
     try{
         const {data} = await Axios.get('http://localhost:8081/products/id/' + productId)
-        
+        console.log('add to cart data =')
+
         dispatch({type: CART_ADD_SUCCESS, payload: {
             product: data._id,
             name: data.name,
-            image: data.image,
+            key: data.key,
             price: data.price,
             countInStock: data.countInStock,
             qty

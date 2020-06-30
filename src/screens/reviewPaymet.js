@@ -9,9 +9,12 @@ function ReviewPayment(props) {
     
     const cart = useSelector(state => state.cartList)
     const {cartItems, addressInfo} = cart
-
+    console.log(cartItems)
     const userSignin = useSelector(state => state.userSignin)
     const {userInfo} = userSignin
+
+    const imageList = useSelector( state => state.imageList)
+    const {loadingImages, images} = imageList
 
     const [amount, setAmount] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
@@ -39,6 +42,8 @@ function ReviewPayment(props) {
     
     return(
         userInfo ? 
+        loadingImages ? <div>Loading...</div>
+        :
         <main className="main">
             <h3 className="main-h3">REVIEW PAYMENT</h3>
         <div className="reviewpayment-content">
@@ -100,10 +105,13 @@ function ReviewPayment(props) {
                 </div>
                 <h4 className="review-content-text">PRODUCTS</h4>
                 {cartItems.map( item => (
-
+                    
                 <div key={item.product} className="list-body-review">
                     <div className="body-img">
-                        <img src={item.image} alt="product"></img>
+                        {images.map( image => (
+                            image.key === item.key && 
+                            <img key={image.key} src={image.url} alt="product"></img>
+                        ))}
                     </div>
 
                     <div className="body-details">

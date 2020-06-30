@@ -3,12 +3,16 @@ import '../styles/product.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { productById } from '../actions/productActions'
 import { getIdFromUrl } from '../helper'
+import { listImages } from '../actions/imageActions'
 
 function Product(props) {
 
     // pegar lista de produtos
     const productItem = useSelector(state => state.productItem)
     const {loading, product, error} = productItem
+
+    const imageList = useSelector( state => state.imageList)
+    const {loadingImages, images} = imageList
 
     const dispatch = useDispatch()
 
@@ -19,9 +23,8 @@ function Product(props) {
     
     // pegar pelo id
     useEffect( () => {
-
         dispatch(productById(id))
-        
+        dispatch(listImages())
     }, [dispatch, props, id])
 
     // add to cart
@@ -30,7 +33,7 @@ function Product(props) {
     }
 
     return(
-        loading ? <div>Loading...</div> :
+        loading || loadingImages ? <div>Loading...</div> :
         error ? <div>Error... {error}</div> :
         
         <div className="product-main-content">
@@ -38,7 +41,10 @@ function Product(props) {
             <div className="product-info-content">
 
                 <div className="buy-product-image">
-                    <img src={product.image} alt="product"></img>
+                    {images.map( image => (
+                        image.key === product.key && 
+                        <img key={image.key} src={image.url} alt="Product"></img>
+                    ))}
                 </div>
 
                 <div className="buy-product-details">

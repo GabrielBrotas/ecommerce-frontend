@@ -65,9 +65,11 @@ function Admin(props) {
 
     // save product
     const submitHandler = (e) => {
-        // mandar a imagem
-        dispatch(uploadImage(uploadedFile))
-    
+        if(name !== ""){
+            dispatch(uploadImage(uploadedFile))
+        } else {
+            alert('nao deixe nenhum campo vazio!')
+        } 
     }
 
     useEffect( () => {
@@ -139,7 +141,7 @@ function Admin(props) {
                 </h3>
                 
 
-                <form onSubmit={submitHandler}>
+                <form>
                     <ul className="itemConfig-form">
 
                         <li>
@@ -229,7 +231,7 @@ function Admin(props) {
                         <th>Categoria</th>
                         <th>Preço (R$)</th>
                         <th>Qtd em Estoque</th>
-                        <th>Descrição</th>
+                        <th style={{width: '50%'}}>Descrição</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -241,11 +243,17 @@ function Admin(props) {
                             <td>{product.category}</td>
                             <td>{product.price}</td>
                             <td>{product.countInStock}</td>
-                            <td className="tr-description">{product.description}</td>
+                            
+                            <td className="tr-description">
+                                <p>
+                                {product.description}
+                                </p>
+                            </td>
                             <td className="admin-table-actions">
                                 <button className="edit-button" onClick={() => openForm(product)}>Editar</button>
                                 <button className="delete-button" onClick={ () => deleteHandler(product._id)}>Deletar</button>
                             </td>
+                            
                         </tr>
                     ))} 
                 </tbody>

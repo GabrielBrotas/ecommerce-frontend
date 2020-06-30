@@ -5,6 +5,7 @@ import '../styles/reviewPayment.css'
 import { getIdAndQtyFromUrl } from '../helper'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import { listImages } from '../actions/imageActions'
 
 function Cart(props) {
     
@@ -13,6 +14,9 @@ function Cart(props) {
 
     const userSignin = useSelector(state => state.userSignin)
     const {userInfo} = userSignin
+
+    const imageList = useSelector( state => state.imageList)
+    const {loadingImages, images} = imageList
 
     // pegear o id e a quantidade caso tenha
     const url = props.location.search
@@ -23,6 +27,10 @@ function Cart(props) {
     const [totalPrice, setTotalPrice] = useState(0)
 
     const dispatch = useDispatch()
+
+    useEffect( () => {
+        dispatch(listImages())
+    }, [dispatch])
 
     useEffect( () => {
         
@@ -45,7 +53,8 @@ function Cart(props) {
 
     
     return(
-  
+        loadingImages ? <div>loading...</div>
+        :
         <div className="shoppingcart-content">
             
             <div className="list-content">
@@ -55,7 +64,11 @@ function Cart(props) {
 
                         <div key={item.product} className="list-body">
                             <div className="body-img">
-                                <img src={item.image} alt="product"></img>
+                                
+                                    {images.map( image => (
+                                        image.key === item.key && 
+                                        <img key={image.key} src={image.url} alt="product"></img>
+                                    ))}
                             </div>
 
                             <div className="body-details">
