@@ -35,16 +35,15 @@ const productById = (id) => async (dispatch) => {
 
 
 const saveProduct = (product) => async (dispatch) => {
-
     try {
-
         dispatch({type: PRODUCT_SAVE_REQUEST, payload: product})
 
         if(!product._id){
 
             const {data} = await Axios.post('http://localhost:8081/products', product)
+            
             dispatch({type: PRODUCT_SAVE_SUCCESS, payload: data})
-
+            
         } else {
             const {data} = await Axios.put('http://localhost:8081/products/' + product._id, product)
 
@@ -56,7 +55,6 @@ const saveProduct = (product) => async (dispatch) => {
         dispatch({type: PRODUCT_SAVE_FAIL, payload: error.message})
     }
 }
-
 
 const deleteProduct = (productId) => async (dispatch) => {
 

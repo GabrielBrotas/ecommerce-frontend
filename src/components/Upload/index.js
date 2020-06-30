@@ -3,7 +3,7 @@ import React from 'react'
 import Dropzone from 'react-dropzone'
 
 import {DropContainer, UploadMessage} from './styles'
-
+import {MdAddAPhoto} from 'react-icons/md'
 
 export default function Upload(props){
 
@@ -11,7 +11,7 @@ export default function Upload(props){
         
         // nao estiver arrastando nada
         if(!isDragActive){
-            return <UploadMessage>Selecione a imagem...</UploadMessage>
+            return <UploadMessage> {<MdAddAPhoto style={{width: 50}} />} </UploadMessage>
         }
 
         // arrastando um arquivo invalido

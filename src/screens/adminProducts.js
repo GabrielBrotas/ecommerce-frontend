@@ -11,7 +11,7 @@ import { listProducts, saveProduct, deleteProduct} from '../actions/productActio
 
 // components
 import Upload from '../components/Upload'
-
+import FileImage from '../components/FileImage'
 
 
 function Admin(props) {
@@ -19,7 +19,8 @@ function Admin(props) {
     const userSignin = useSelector(state => state.userSignin)
     const {userInfo} = userSignin
 
-    const [showForm, setshowForm] = useState(false)
+    const productList = useSelector(state=> state.productList)
+    const {loading, products, error, next, previous} = productList
 
     const [id, setId] = useState('')
     const [name, setName] = useState('')
@@ -31,8 +32,8 @@ function Admin(props) {
     const [bestseller, setBestseller] = useState(false)
     const [carousel, setCarousel] = useState(false)
 
-    const productList = useSelector(state=> state.productList)
-    const {loading, products, error, next, previous} = productList
+    const [uploadedFile, setUploadedFile] = useState({})
+    const [showForm, setshowForm] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -96,15 +97,19 @@ function Admin(props) {
             error: false,
             url: null, // url que vai redirecionar para a imagem, inicia como null pois só vai ser preenchida depois de preenchido o upload
         }
+        
+        setUploadedFile(newUploadedFile)
 
         processUpload(newUploadedFile)
     }
 
-    const processUpload = (uploadedFile) => {
+    const processUpload = (uploadFile) => {
         const data = new FormData()
-
-        data.append('file', uploadedFile.file, uploadedFile.name)
+        data.append('file', uploadFile.file, uploadFile.name)
+        
+        setImage(data)
     }
+
 
     return(
         loading ? <div>Loading...</div>
@@ -174,9 +179,13 @@ function Admin(props) {
                             </select>
                         </li>
 
-                        <li>
-                            {/* <input name="image" type="text" placeholder="imagem path..." value={image} onChange={(e) => setImage(e.target.value)} required></input> */}
+                        <li style={{display: 'flex', flexDirection: 'row'}}>
                             <Upload onUpload={handleUpload} />
+                            {uploadedFile.preview && (
+                                <FileImage file={uploadedFile} onDelete={() => {}} />
+                            )}
+                            
+
                         </li>
 
                         <li className="new-item-button">

@@ -219,6 +219,11 @@ font-weight: 600;
     box-sizing: border-box;
 }
 
+.uploaded-image{
+    display: flex;
+    flex-direction: row;
+}
+
 .new-item-button{
     margin: 2rem 0;
 }
