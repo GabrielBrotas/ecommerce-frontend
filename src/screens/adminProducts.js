@@ -5,13 +5,14 @@ import '../styles/admin.css'
 import { useSelector, useDispatch } from 'react-redux'
 import {uniqueId} from 'lodash'
 import filesize from 'filesize'
-
+import {isEmpty} from '../helper'
 // actions
 import { listProducts, saveProduct, deleteProduct, uploadImage} from '../actions/productActions'
 
 // components
 import Upload from '../components/Upload'
 import FileImage from '../components/FileImage'
+import Axios from 'axios'
 
 
 function Admin(props) {
@@ -65,13 +66,31 @@ function Admin(props) {
 
     // save product
     const submitHandler = (e) => {
-        dispatch(saveProduct({
-            _id: id,
-            name, price, category, countInStock, description, bestseller, carousel
-        }))
-        setshowForm(!showForm)
-        // window.location.reload()
+        // mandar a imagem
+        dispatch(uploadImage(uploadedFile))
+    
     }
+
+    useEffect( () => {
+        setUploadedFile({...uploadedFile, progress})
+
+        if(uploaded){
+            setUploadedFile({...uploadedFile, id: image.key, url: image.url, uploaded})
+            dispatch(saveProduct({
+                _id: id,
+                name, fileUrl: image.url, key: image.key, price, category, countInStock, description, bestseller, carousel
+            }))
+            setshowForm(!showForm)
+            setUploadedFile({})
+            window.location.reload()
+        }
+
+        if(errorUpload){
+            setUploadedFile({...uploadedFile, error: true})
+        }
+
+        // eslint-disable-next-line
+    }, [progress, uploaded, errorUpload, image])
 
     // delete product
     const deleteHandler = (id) => {
@@ -95,20 +114,12 @@ function Admin(props) {
             url: null, // url que vai redirecionar para a imagem, inicia como null pois só vai ser preenchida depois de preenchido o upload
         }
         setUploadedFile(newUploadedFile)
-        dispatch(uploadImage(newUploadedFile))
     }
 
-    useEffect( () => {
-        setUploadedFile({...uploadedFile, progress})
-        if(uploaded){
-            setUploadedFile({...uploadedFile, id: image.key, url: image.url, uploaded})
-        }
-        if(errorUpload){
-            setUploadedFile({...uploadedFile, error: true})
-        }
-        
-    }, [progress, uploaded])
-
+    const deleteUpload = async (id) => {
+        await Axios.delete(`http://localhost:8081/uploads/${id}`)
+        setUploadedFile({});
+    }
 
     return(
         loading ? <div>Loading...</div>
@@ -178,20 +189,31 @@ function Admin(props) {
                             </select>
                         </li>
 
-                        <li style={{display: 'flex', flexDirection: 'row'}}>
-                            <Upload onUpload={handleUpload} />
-                            {uploadedFile.preview && (
-                                <FileImage file={uploadedFile} onDelete={() => {}} />
+                        <li>
+
+                            {isEmpty(uploadedFile.file) && (
+                                <Upload onUpload={handleUpload} />
                             )}
+                            {uploadedFile.preview && (
+                                <FileImage file={uploadedFile} onDelete={deleteUpload} />
+                            )}
+                            
                             
 
                         </li>
 
                         <li className="new-item-button">
-                            <button type="button" className="admin-button" onClick={submitHandler}>{id ? 'Editar' : 'Adicionar'}</button>
+                            {!progress 
+                                ? 
+                                <button type="button" className="admin-button" onClick={submitHandler}>{id ? 'Editar' : 'Adicionar'}</button>
+                                :
+                                <button type="button" className="admin-button" disabled>loading...</button>
+                            }
+                            
                         </li>
                         <li className="new-item-button">
-                            <button className="admin-button-cancel" onClick={() => openForm({})}>Cancelar</button>
+                            <button className="admin-button-cancel" 
+                            onClick={() => openForm({})}>Cancelar</button>
                         </li>
 
                     </ul>

@@ -58,7 +58,7 @@ const uploadImage = (uploadedFile) => (dispatch) => {
 
     imageForm.append('file', uploadedFile.file, uploadedFile.name)
 
-    Axios.post('http://localhost:8081/products/upload', imageForm, {
+    Axios.post('http://localhost:8081/uploads', imageForm, {
 
         onUploadProgress: e=> {
             const progress = parseInt(Math.round( (e.loaded * 100) / e.total ))

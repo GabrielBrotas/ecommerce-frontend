@@ -20,7 +20,7 @@ const FileList = ({ file, onDelete }) => {
                     <span>
                         {file.readableSize}
                         {!!file.url && (
-                            <button onClick={()=> onDelete(file.id)}>Excluir</button>
+                            <button type="button" onClick={()=> onDelete(file.id)}>Excluir</button>
                         )}
                     </span>
                 </div>
@@ -43,7 +43,7 @@ const FileList = ({ file, onDelete }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <MdLink style={{marginRight: 8}} size={24} color="#222" />
+                    <MdLink style={{marginRight: 8, cursor: 'pointer'}} size={24} color="#ccc" />
                 </a>
                 )}
                     

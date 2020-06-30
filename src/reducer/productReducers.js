@@ -18,7 +18,7 @@ function productListReducer(state = {products: []}, action) {
 }
 
 
-function imageUploadReducer(state = {progress: 0, uploaded: false}, action) {
+function imageUploadReducer(state = {uploaded: false}, action) {
 
     switch (action.type) {
         case IMAGE_SAVE_REQUEST:
@@ -26,7 +26,7 @@ function imageUploadReducer(state = {progress: 0, uploaded: false}, action) {
         case IMAGE_SAVE_SUCCESS:
             return {uploaded: true, progress:100, image: action.payload}
         case IMAGE_SAVE_FAIL:
-            return {uploaded: false, progress:100, errorUpload: action.payload}
+            return {uploaded: false, progress:100, errorUpload: true}
         default:
             return state
     }
