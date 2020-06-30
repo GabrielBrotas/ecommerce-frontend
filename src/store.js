@@ -1,8 +1,13 @@
+// libraries
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
-import { productListReducer, productDeleteReducer, productItemReducer, paymentListReducer, imageUploadReducer } from './reducer/productReducers'
+
+// reducers
+import { productListReducer, productDeleteReducer, productItemReducer, paymentListReducer} from './reducer/productReducers'
+import {imageUploadReducer} from './reducer/imageReducer'
 import { cartReducer } from './reducer/cartReducer'
 
+// cookies
 import Cookie from 'js-cookie'
 import { userRegisterReducer, userSigninReducer } from './reducer/userReducer'
 

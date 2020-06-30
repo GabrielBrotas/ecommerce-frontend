@@ -14,6 +14,7 @@ function Products(props) {
     const productList = useSelector(state => state.productList)
     const {loading, products, error, next, previous} = productList
 
+
     const dispatch = useDispatch()
 
     const [page, setPage] = useState(1)
@@ -23,8 +24,6 @@ function Products(props) {
 
         setFilterCondition(getFilterFromUrl(props.location.search))
         dispatch(listProducts(filterCondition, page, limit))
-        
-        // filter.style = 'background-color: #fff'
 
     }, [dispatch, filterCondition, props, page, limit])
 

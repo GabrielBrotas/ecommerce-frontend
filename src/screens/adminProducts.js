@@ -7,13 +7,12 @@ import {uniqueId} from 'lodash'
 import filesize from 'filesize'
 import {isEmpty} from '../helper'
 // actions
-import { listProducts, saveProduct, deleteProduct, uploadImage} from '../actions/productActions'
+import { listProducts, saveProduct, deleteProduct} from '../actions/productActions'
+import {uploadImage, deleteImage} from '../actions/imageActions'
 
 // components
 import Upload from '../components/Upload'
 import FileImage from '../components/FileImage'
-import Axios from 'axios'
-
 
 function Admin(props) {
 
@@ -117,7 +116,7 @@ function Admin(props) {
     }
 
     const deleteUpload = async (id) => {
-        await Axios.delete(`http://localhost:8081/uploads/${id}`)
+        dispatch(deleteImage(id))
         setUploadedFile({});
     }
 
