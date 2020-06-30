@@ -66,14 +66,14 @@ function Admin(props) {
     // save product
     const submitHandler = (e) => {
         // e.preventDefault();
-        
+        // todo, form chegando vazio ao backend
         dispatch(saveProduct({
             _id: id,
             name, price, image, category, countInStock, description, bestseller, carousel
         }))
 
         setshowForm(!showForm)
-        window.location.reload()
+
     }
 
     // delete product
@@ -106,7 +106,6 @@ function Admin(props) {
     const processUpload = (uploadFile) => {
         const data = new FormData()
         data.append('file', uploadFile.file, uploadFile.name)
-        
         setImage(data)
     }
 

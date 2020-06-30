@@ -30,10 +30,10 @@ const FileList = ({ file, onDelete }) => {
                     <CircularProgressbar
                     styles={{
                         root: {width: 24},
-                        path: {stroke: "#7159c1"}
+                        path: {stroke: "#0078f2"},
                     }}
                     strokeWidth={10}
-                    value={file.progress}
+                    value={25}
                 />
                 )}
 
