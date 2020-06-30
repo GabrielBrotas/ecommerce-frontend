@@ -5,6 +5,7 @@ import { useSelector, useDispatch} from 'react-redux'
 import { listProducts } from '../actions/productActions'
 import { Link } from 'react-router-dom'
 import { getFilterFromUrl } from '../helper'
+import { listImages } from '../actions/imageActions'
 
 
 function Products(props) {
@@ -14,6 +15,8 @@ function Products(props) {
     const productList = useSelector(state => state.productList)
     const {loading, products, error, next, previous} = productList
 
+    const imageList = useSelector( state => state.imageList)
+    const {loadingImages, images} = imageList
 
     const dispatch = useDispatch()
 
@@ -24,12 +27,12 @@ function Products(props) {
 
         setFilterCondition(getFilterFromUrl(props.location.search))
         dispatch(listProducts(filterCondition, page, limit))
-
+        dispatch(listImages())
     }, [dispatch, filterCondition, props, page, limit])
 
     useEffect( () => {
 
-        if(!loading){
+        if(!loading && !loadingImages){
             // css para o filtro clicado
             var filter;
             if(filterCondition === 'All' || null){
@@ -41,16 +44,13 @@ function Products(props) {
                 filter.style.backgroundColor = "#202020"
                 filter.style.borderBottom = "4px solid #0078f2"
             }
-            
-            
         }
        
-        
-    }, [filterCondition, loading])
+    }, [filterCondition, loading, loadingImages])
 
 
     return( 
-        loading ? <div>Loading...</div>
+        loading || loadingImages ? <div>Loading...</div>
         :
         error ? <div>Erro: {error}</div>
         :
@@ -95,12 +95,16 @@ function Products(props) {
                 <div className="box-products">
                     
                     {products.map( product => (
-
+                        
                         <Link to={"/product/" + product._id} key={product._id} style={{ textDecoration: 'none', color: '#161616' }}>
                             <div className="product-content">
 
                                 <div className="product-img">
-                                    <img src={product.image} alt="Product"></img>
+                                    {images.map( image => (
+                                        image.key === product.key && 
+                                        <img key={image.key} src={image.url} alt="Product"></img>
+                                    ))}
+                                    
                                 </div>
 
                                 <div className="product-description">
@@ -118,6 +122,7 @@ function Products(props) {
 
                             </div>
                         </Link>
+                       
                     ))}
                     
 

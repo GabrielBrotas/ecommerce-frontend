@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 
 // reducers
 import { productListReducer, productDeleteReducer, productItemReducer, paymentListReducer} from './reducer/productReducers'
-import {imageUploadReducer} from './reducer/imageReducer'
+import {imageUploadReducer, imageListReducer} from './reducer/imageReducer'
 import { cartReducer } from './reducer/cartReducer'
 
 // cookies
@@ -26,7 +26,8 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userSignin: userSigninReducer,
     paymentList: paymentListReducer,
-    imageUpload: imageUploadReducer
+    imageUpload: imageUploadReducer,
+    imageList: imageListReducer
 })
 
 

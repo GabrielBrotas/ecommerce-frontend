@@ -5,7 +5,7 @@ import '../styles/admin.css'
 import { useSelector, useDispatch } from 'react-redux'
 import {uniqueId} from 'lodash'
 import filesize from 'filesize'
-import {isEmpty} from '../helper'
+
 // actions
 import { listProducts, saveProduct, deleteProduct} from '../actions/productActions'
 import {uploadImage, deleteImage} from '../actions/imageActions'
@@ -188,17 +188,11 @@ function Admin(props) {
                             </select>
                         </li>
 
-                        <li>
-
-                            {isEmpty(uploadedFile.file) && (
-                                <Upload onUpload={handleUpload} />
-                            )}
+                        <li style={{display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
+                            <Upload onUpload={handleUpload} />
                             {uploadedFile.preview && (
                                 <FileImage file={uploadedFile} onDelete={deleteUpload} />
                             )}
-                            
-                            
-
                         </li>
 
                         <li className="new-item-button">
