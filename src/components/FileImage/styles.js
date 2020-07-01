@@ -42,8 +42,8 @@ export const FileInfo = styled.div`
 `
 
 export const Preview = styled.div`
-    width: 36px;
-    height: 36px;
+    width: 100px;
+    height: 100px;
     border-radius: 5px;
     background-image: url(${props => props.src});
     background-repeat: no-repeat;

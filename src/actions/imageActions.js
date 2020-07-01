@@ -14,6 +14,7 @@ const listImages = () => async (dispatch) => {
     }
 }
 
+
 const uploadImage = (uploadedFile) => (dispatch) => {
     const imageForm = new FormData()
 
@@ -24,7 +25,6 @@ const uploadImage = (uploadedFile) => (dispatch) => {
             const progress = parseInt(Math.round( (e.loaded * 100) / e.total ))
             dispatch({type: IMAGE_SAVE_REQUEST, payload: progress})
         }
-
     }).then( response => {
         const {data} = response
         dispatch({type: IMAGE_SAVE_SUCCESS, payload: data})
@@ -33,8 +33,12 @@ const uploadImage = (uploadedFile) => (dispatch) => {
     })
 }
 
-const deleteImage = (id) => async (dispatch) => {
-    await Axios.delete(`http://localhost:8081/uploads/${id}`)
+
+
+
+const deleteImage = (key) => async (dispatch) => {
+    await Axios.delete(`http://localhost:8081/uploads/${key}`)
 }
+
 
 export {uploadImage, deleteImage, listImages}

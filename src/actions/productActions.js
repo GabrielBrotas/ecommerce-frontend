@@ -43,6 +43,7 @@ const saveProduct = (product) => async (dispatch) => {
             const {data} = await Axios.post('http://localhost:8081/products', product)
             dispatch({type: PRODUCT_SAVE_SUCCESS, payload: data})
         } else {
+
             const {data} = await Axios.put('http://localhost:8081/products/' + product._id, product)
             dispatch({type: PRODUCT_SAVE_SUCCESS, payload: data})
         }
@@ -53,14 +54,11 @@ const saveProduct = (product) => async (dispatch) => {
 }
 
 
-
-
-
-const deleteProduct = (productId) => async (dispatch) => {
+const deleteProduct = (productKey) => async (dispatch) => {
 
     try{
-        dispatch({type: PRODUCT_DELETE_REQUEST, payload: productId})
-        const {data} = await Axios.delete('http://localhost:8081/products/' + productId)
+        dispatch({type: PRODUCT_DELETE_REQUEST, payload: productKey})
+        const {data} = await Axios.delete('http://localhost:8081/products/' + productKey)
         dispatch({type: PRODUCT_DELETE_SUCCESS, payload: data, success: true})
     } catch(error) {
         dispatch({type: PRODUCT_DELETE_FAIL, payload: error.message})

@@ -6,7 +6,7 @@ import {MdCheckCircle, MdError, MdLink} from 'react-icons/md'
 
 import {Container, FileInfo, Preview} from './styles'
 
-const FileList = ({ file, onDelete }) => {
+const FileList = ({ file, onCancel, onDelete }) => {
 
     return (
     <Container>
@@ -23,7 +23,7 @@ const FileList = ({ file, onDelete }) => {
                     <span>
                         {file.readableSize}
                         {!!file.url && (
-                            <button type="button" onClick={()=> onDelete(file.id)}>Excluir</button>
+                            <button type="button" onClick={()=> file.key ? onDelete(file.key) : onCancel() }>Excluir</button>
                         )}
                     </span>
                 </div>

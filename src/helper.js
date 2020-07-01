@@ -20,5 +20,13 @@ function getFilterFromUrl(filter) {
     return condition
 }
 
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
 
-export {getIdFromUrl, getIdAndQtyFromUrl, getFilterFromUrl}
+    return true;
+}
+
+export {getIdFromUrl, getIdAndQtyFromUrl, getFilterFromUrl, isEmpty}

@@ -5,15 +5,17 @@ import '../styles/admin.css'
 import { useSelector, useDispatch } from 'react-redux'
 import {uniqueId} from 'lodash'
 import filesize from 'filesize'
+import {isEmpty} from '../helper'
 
 // actions
-import {listImages} from '../actions/imageActions'
+import {listImages, uploadImage,  deleteImage} from '../actions/imageActions'
 import { listProducts, saveProduct, deleteProduct} from '../actions/productActions'
-import {uploadImage, deleteImage} from '../actions/imageActions'
+
 
 // components
 import Upload from '../components/Upload'
 import FileImage from '../components/FileImage'
+import {Preview} from '../components/FileImage/styles'
 
 function Admin(props) {
 
@@ -29,7 +31,9 @@ function Admin(props) {
     const imageList = useSelector( state => state.imageList)
     const {loadingImages, images} = imageList
 
+
     const [id, setId] = useState('')
+    const [key, setKey] = useState('')
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
     const [category, setCategory] = useState('Game')
@@ -55,6 +59,7 @@ function Admin(props) {
     // open new item or edit item form
     const openForm = (product) => {
         setshowForm(true)
+
         if(product._id) {
             setId(product._id)
             setName(product.name)
@@ -72,26 +77,27 @@ function Admin(props) {
     }
 
 
-    // save product
+    // fazer upload da imagem 
     const submitHandler = () => {
-        if(name !== ""){
+        if(name !== "" && !isEmpty(uploadedFile)){   
+            if(key){
+                dispatch(deleteImage(key))
+            } 
             dispatch(uploadImage(uploadedFile))
         } else {
-            alert('nao deixe nenhum campo vazio!')
+            alert('Preencha todos os campos!')
         } 
     }
+    
 
-
+    // Depois de feito o upload salvar os dados do produto
     useEffect( () => {
         setUploadedFile({...uploadedFile, progress})
 
         if(uploaded){
             setUploadedFile({...uploadedFile, id: image.key, url: image.url, uploaded})
-            dispatch(saveProduct({
-                _id: id,
-                name, fileUrl: image.url, key: image.key, price, category, countInStock, description, bestseller, carousel
-            }))
             setshowForm(!showForm)
+            saveProductData()
             setUploadedFile({})
             window.location.reload()
         }
@@ -103,13 +109,14 @@ function Admin(props) {
         // eslint-disable-next-line
     }, [progress, uploaded, errorUpload, image])
 
-    // delete product
-    const deleteHandler = (id) => {
-        dispatch(deleteProduct(id))
-        window.location.reload()
+    const saveProductData = () => {
+        dispatch(saveProduct({
+            _id: id,
+            name, fileUrl: image.url, key: image.key, price, category, countInStock, description, bestseller, carousel
+        }))
     }
 
-    // upload imagem
+    // pegar os dados da imagem para fazer upload
     const handleUpload = (files) => {
         const file = files[0]
         const newUploadedFile = {
@@ -124,18 +131,35 @@ function Admin(props) {
             error: false,
             url: null, // url que vai redirecionar para a imagem, inicia como null pois só vai ser preenchida depois de preenchido o upload
         }
-        setUploadedFile(newUploadedFile)
+        products.map( product =>
+            product.key === uploadedFile.key && setKey(uploadedFile.key)
+        )
+        setUploadedFile(newUploadedFile)    
     }
 
-    const deleteUpload = async (id) => {
-        dispatch(deleteImage(id))
+    // cancelar upload
+    const cancelUpload = () => {
         setUploadedFile({});
     }
 
+    const deleteUpload = (key) =>{
+        setUploadedFile({});
+        setKey(key)
+    }
+
+    // remove product
+    const deleteHandler = (key) => {
+        dispatch(deleteProduct(key))
+        dispatch(deleteImage(key))
+        window.location.reload()
+    }
+
+    // fechar form
     const cancelForm = () => {
         setshowForm(false)
         setUploadedFile({})
         setId('')
+        setKey('')
         setName('')
         setPrice(0)
         setCategory('Game')
@@ -144,6 +168,7 @@ function Admin(props) {
         setBestseller(false)
         setCarousel(false)
     }
+
 
     return(
         loading || loadingImages ? <div>Loading...</div>
@@ -216,7 +241,7 @@ function Admin(props) {
                         <li style={{display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
                             <Upload onUpload={handleUpload} />
                             {(uploadedFile.preview || uploadedFile.url) && (
-                                <FileImage file={uploadedFile} onDelete={deleteUpload} />
+                                <FileImage file={uploadedFile} onCancel={cancelUpload} onDelete={deleteUpload} />
                             )}
                         </li>
 
@@ -250,7 +275,7 @@ function Admin(props) {
 
                 <thead>
                     <tr>
-
+                        <th>Image</th>
                         <th>Nome</th>
                         <th>Categoria</th>
                         <th>Preço (R$)</th>
@@ -263,6 +288,12 @@ function Admin(props) {
                 <tbody>
                     {products.map(product => (
                         <tr key={product._id}>
+                            <td>
+                            {images.map( image => (
+                                image.key === product.key && 
+                                <Preview key={image.key} src={image.url} />
+                            ))}
+                            </td>
                             <td>{product.name}</td>
                             <td>{product.category}</td>
                             <td>{product.price}</td>
@@ -275,7 +306,7 @@ function Admin(props) {
                             </td>
                             <td className="admin-table-actions">
                                 <button className="edit-button" onClick={() => openForm(product)}>Editar</button>
-                                <button className="delete-button" onClick={ () => deleteHandler(product._id)}>Deletar</button>
+                                <button className="delete-button" onClick={ () => deleteHandler(product.key)}>Deletar</button>
                             </td>
                             
                         </tr>
