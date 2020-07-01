@@ -13,7 +13,10 @@ const FileList = ({ file, onDelete }) => {
         
         <li>
             <FileInfo >
-                <Preview src={file.preview}/>
+                {file.url 
+                    ? <Preview src={file.url}/>
+                    : <Preview src={file.preview}/>
+                }
                 <div>
 
                     <strong>{file.name}</strong>

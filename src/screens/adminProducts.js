@@ -7,6 +7,7 @@ import {uniqueId} from 'lodash'
 import filesize from 'filesize'
 
 // actions
+import {listImages} from '../actions/imageActions'
 import { listProducts, saveProduct, deleteProduct} from '../actions/productActions'
 import {uploadImage, deleteImage} from '../actions/imageActions'
 
@@ -24,6 +25,9 @@ function Admin(props) {
 
     const imageUpload = useSelector(state=> state.imageUpload)
     const {progress, uploaded, image, errorUpload} = imageUpload
+    
+    const imageList = useSelector( state => state.imageList)
+    const {loadingImages, images} = imageList
 
     const [id, setId] = useState('')
     const [name, setName] = useState('')
@@ -34,7 +38,6 @@ function Admin(props) {
     const [bestseller, setBestseller] = useState(false)
     const [carousel, setCarousel] = useState(false)
 
-
     const [uploadedFile, setUploadedFile] = useState({})
     const [showForm, setshowForm] = useState(false)
 
@@ -43,14 +46,15 @@ function Admin(props) {
     const [page, setPage] = useState(1)
     const limit = 8
 
-    // take list of products
+    // take list of products and images
     useEffect(() => {
         dispatch(listProducts(null, page, limit))
+        dispatch(listImages())
     }, [dispatch, page, limit])
 
     // open new item or edit item form
     const openForm = (product) => {
-        setshowForm(!showForm)
+        setshowForm(true)
         if(product._id) {
             setId(product._id)
             setName(product.name)
@@ -60,17 +64,23 @@ function Admin(props) {
             setDescription(product.description)
             setBestseller(product.bestseller)
             setCarousel(product.carousel)
+
+            images.map( image => (
+                image.key === product.key && setUploadedFile({...image, uploaded: true, readableSize: filesize(image.size)} )
+            ))
         }
     }
 
+
     // save product
-    const submitHandler = (e) => {
+    const submitHandler = () => {
         if(name !== ""){
             dispatch(uploadImage(uploadedFile))
         } else {
             alert('nao deixe nenhum campo vazio!')
         } 
     }
+
 
     useEffect( () => {
         setUploadedFile({...uploadedFile, progress})
@@ -122,8 +132,21 @@ function Admin(props) {
         setUploadedFile({});
     }
 
+    const cancelForm = () => {
+        setshowForm(false)
+        setUploadedFile({})
+        setId('')
+        setName('')
+        setPrice(0)
+        setCategory('Game')
+        setCountInStock(0)
+        setDescription('')
+        setBestseller(false)
+        setCarousel(false)
+    }
+
     return(
-        loading ? <div>Loading...</div>
+        loading || loadingImages ? <div>Loading...</div>
         :
         error ? <div>Erro: {error} </div> 
         :
@@ -192,7 +215,7 @@ function Admin(props) {
 
                         <li style={{display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
                             <Upload onUpload={handleUpload} />
-                            {uploadedFile.preview && (
+                            {(uploadedFile.preview || uploadedFile.url) && (
                                 <FileImage file={uploadedFile} onDelete={deleteUpload} />
                             )}
                         </li>
@@ -207,8 +230,8 @@ function Admin(props) {
                             
                         </li>
                         <li className="new-item-button">
-                            <button className="admin-button-cancel" 
-                            onClick={() => openForm({})}>Cancelar</button>
+                            <button type="button" className="admin-button-cancel" 
+                            onClick={cancelForm}>Cancelar</button>
                         </li>
 
                     </ul>
@@ -217,10 +240,11 @@ function Admin(props) {
 
             </div>
             }
-
+            {!showForm && 
             <div className="newItemDiv">
                 <button className="button" onClick={() => openForm({})}> Adicionar novo Item</button>
-            </div>
+            </div>}
+            
 
             <table className="admin-table">
 
