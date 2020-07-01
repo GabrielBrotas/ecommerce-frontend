@@ -24,13 +24,12 @@ function Admin(props) {
 
     const productList = useSelector(state=> state.productList)
     const {loading, products, error, next, previous} = productList
-
-    const imageUpload = useSelector(state=> state.imageUpload)
-    const {progress, uploaded, image, errorUpload} = imageUpload
     
     const imageList = useSelector( state => state.imageList)
     const {loadingImages, images} = imageList
 
+    const imageUpload = useSelector(state=> state.imageUpload)
+    const {progress, uploaded, image, errorUpload} = imageUpload
 
     const [id, setId] = useState('')
     const [key, setKey] = useState('')
@@ -80,10 +79,20 @@ function Admin(props) {
     // fazer upload da imagem 
     const submitHandler = () => {
         if(name !== "" && !isEmpty(uploadedFile)){   
+
+            // alterar a foto do produto
             if(key){
+                console.log('uploaded file')
                 dispatch(deleteImage(key))
-            } 
-            dispatch(uploadImage(uploadedFile))
+                dispatch(uploadImage(uploadedFile))
+            // alterar dados do produto
+            } else if (uploadedFile.url){
+                saveProductData(uploadedFile.url, uploadedFile.key)
+            // novo produto
+            } else {
+                dispatch(uploadImage(uploadedFile))
+            }
+            
         } else {
             alert('Preencha todos os campos!')
         } 
@@ -97,9 +106,8 @@ function Admin(props) {
         if(uploaded){
             setUploadedFile({...uploadedFile, id: image.key, url: image.url, uploaded})
             setshowForm(!showForm)
-            saveProductData()
+            saveProductData(image.url, image.key)
             setUploadedFile({})
-            window.location.reload()
         }
 
         if(errorUpload){
@@ -109,12 +117,15 @@ function Admin(props) {
         // eslint-disable-next-line
     }, [progress, uploaded, errorUpload, image])
 
-    const saveProductData = () => {
+
+    const saveProductData = (fileUrl, key) => {
         dispatch(saveProduct({
             _id: id,
-            name, fileUrl: image.url, key: image.key, price, category, countInStock, description, bestseller, carousel
+            name, fileUrl, key, price, category, countInStock, description, bestseller, carousel
         }))
+        window.location.reload()
     }
+
 
     // pegar os dados da imagem para fazer upload
     const handleUpload = (files) => {
