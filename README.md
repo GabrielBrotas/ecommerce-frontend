@@ -26,7 +26,7 @@
   ## Photos
   
   ### Home Screen
-    ![imagem](https://github.com/GabrielBrotas/ecommerce-frontend/blob/master/public/images/github/landingpage.JPG)
+    ![homeScreen](https://github.com/GabrielBrotas/ecommerce-frontend/blob/master/public/images/github/landingpage.JPG)
   ### Produtcs Screen
   
   ### Product Detail
