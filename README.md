@@ -26,18 +26,27 @@
   ## Photos
   
   ### Home Screen
-  
+   <img src="public/images/github/landingpage.JPG" alt="drawing" width="700px"/>
+   <img src="public/images/github/homepage.JPG" alt="drawing" width="700px"/>
+    
   ### Produtcs Screen
-  
+   <img src="public/images/github/produtos.JPG" alt="drawing" width="700px"/>
+   
   ### Product Detail
-  
+   <img src="public/images/github/descricaoproduto.JPG" alt="drawing" width="700px"/>
+   
   ### Address Confirm
+   <img src="public/images/github/endereço.JPG" alt="drawing" width="700px"/>
   
   ### Confirm Payment
-  
+   <img src="public/images/github/ConfirmPayment.JPG" alt="drawing" width="700px"/>
+   
   ### User Screen
-  
+   <img src="public/images/github/userScreen.JPG" alt="drawing" width="700px"/>
+   
   ### Admin Screen
+   <img src="public/images/github/AdminProducts.JPG" alt="drawing" width="700px"/>
+   <img src="public/images/github/AdminSales.JPG" alt="drawing" width="700px"/>
   
   
     
